@@ -1,0 +1,102 @@
+LAB 4 - Joshua Camilo
+
+
+Exercicio 1 - Show all the information about students and the course associated with them.
+R: select * from student, course
+where stu_cour_id = cour_id
+
+
+
+Exercicio 2 - Display only the student name and the course name
+R: select Full_Name, cour_name from student, course
+where stu_cour_id = cour_id
+
+
+
+Exercicio 3 - Display the class name and the department associated to it.
+R: select cla_name, dep_name
+from class, department
+where cla_dep_id = dep_id
+
+
+
+Exercicio 4 - Display the study plan for each course (course name, class name, semester)
+R: select cour_name, cla_name, plan_semester
+from studyplan, course, class
+where plan_cour_id = cour_id and plan_cla_id = cla_id;
+
+
+
+Exercicio 5 - Display the Study Plan for “Creative 
+Technologies”, sorted by semester
+R: SELECT cl.cla_name,
+       sp.plan_semester
+FROM studyplan sp
+JOIN course c ON sp.plan_cour_id = c.cour_id
+JOIN class cl ON sp.plan_cla_id = cl.cla_id
+WHERE c.cour_name = 'Creative Technologies'
+ORDER BY sp.plan_semester, cl.cla_name;
+
+
+
+6 - Show which courses have classes taught  
+by the “IADE-Tech” department
+R: SELECT DISTINCT c.cour_name
+FROM course c
+JOIN studyplan sp ON sp.plan_cour_id = c.cour_id
+JOIN class cl ON sp.plan_cla_id = cl.cla_id
+JOIN department d ON cl.cla_dep_id = d.dep_id
+WHERE d.dep_initials = 'IADE-Tech'
+ORDER BY c.cour_name;
+
+
+
+
+7 - Display the list of all classes taught in the 
+1st semester of the “Game Development”
+R: SELECT cl.cla_name
+FROM studyplan sp
+JOIN course c ON sp.plan_cour_id = c.cour_id
+JOIN class cl ON sp.plan_cla_id = cl.cla_id
+WHERE c.cour_name = 'Games Development'
+  AND sp.plan_semester = 1
+ORDER BY cl.cla_name;
+
+
+
+
+8 - Build groups of 2 students,    and for both 
+students display their name and course id
+R: SELECT s1.stu_name ,
+       s1.stu_cour_id ,
+       s2.stu_name,
+       s2.stu_cour_id 
+FROM student s1
+JOIN student s2
+  ON s1.stu_id < s2.stu_id;
+
+
+
+
+9 - Repeat the previous exercise, guaranteeing that 
+there are no groups with the same students
+R: SELECT s1.stu_name ,
+       s1.stu_cour_id ,
+       s2.stu_name ,
+       s2.stu_cour_id 
+FROM student s1
+JOIN student s2
+  ON s1.stu_id < s2.stu_id;
+
+
+
+10 - Build groups of two students, belonging 
+to the same course
+R: SELECT s1.stu_name AS student1,
+       s2.stu_name AS student2,
+       s1.stu_cour_id AS course_id
+FROM student s1
+JOIN student s2
+  ON s1.stu_id < s2.stu_id
+ AND s1.stu_cour_id = s2.stu_cour_id;
+ 

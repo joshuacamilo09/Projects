@@ -1,0 +1,99 @@
+LAB 1- Joshua Camilo
+
+Exercicio 1 - view student´s email, name and gender
+
+R: select stu_email, stu_name, stu_gender from student; 
+
+exercicio 2 - repeat the previous query change the stu_name header to full Nanme
+
+R: alter table student
+rename column stu_name to Full_Name; 
+
+exercicio 3 - get all student numbers and apply the formula: stu_id*1000+stu_cour_id
+
+R: select stu_id, stu_cour_id, stu_id * 1000 + stu_cour_id as n
+from student;
+
+exercicio 4 - Buil this sentence for all the students: "The student stu_name is enrolled in the course stu_cour_id"
+
+R: update student
+set sentence = concat( "The student ", Full_name," is enrolled in the course ",stu_cour_id);
+select * from student;
+
+exercicio 5 - display student´s location and gender
+R: select distinct stu_place, stu_gender from student;
+
+exercicio 6 - view all the student ordered by: date of birth
+R: select stu_bdate 
+from student 
+order by stu_bdate desc;
+
+exercicio 7 - view all the students ordered by: gender (ascending) and name (descending)
+R: select stu_gender, Full_Name
+from student 
+order by stu_gender asc, Full_Name desc;
+
+exercicio 8 - view only the student name and email but ordered by date of birth.
+R: SELECT Full_name, stu_email
+FROM student
+ORDER BY stu_bdate ASC;
+
+exercicio 9 - using the same formula as in question 3 show name and number, ordered by that formula.
+R: select (stu_id * 1000 + stu_cour_id) as num, Full_name
+from student
+order by (stu_id * 1000 + stu_cour_id) desc;
+
+exercicio 10 -show only female students (gener = F)
+R: select * from student
+where stu_gender = "F"; 
+
+exercicio 11 - show all the students born between 1996 and 1998
+R: select *
+from student
+where stu_bdate between "1996-01-07" and "1998-02-16";
+
+exercicio 12 - Show all the students born before 1996 or that are enrolled in course 2
+R: select *
+from student
+where stu_bdate < "1996-07-06" or stu_cour_id = 2
+
+exercicio 13 - view male student from course 1 and female students from course 2
+R: select *
+from student
+where 
+(stu_gender = "M" and stu_cour_id = 1)
+or
+(stu_gender = "F" and stu_cour_id = 2)
+
+exercicio 14 - show students born between 1996 and 1998 that are from couse 1, 2 or 4
+R: select * 
+from student
+where (stu_bdate between "1996-01-07" and "1998-02-16")
+and 
+(stu_cour_id in (1, 2, 4) )
+
+exercicio 15 - show students that were not born between 1996 and 1998
+R: select * 
+from student
+where not (stu_bdate between "1996-01-07" and "1998-02-16")
+
+exercicio 16 - show student whose name stars by letter J
+R: select * 
+from student
+where Full_Name like ("J%")
+
+exercicio 17 - show students whose last name contains 5 letters
+R: select * 
+from student
+where char_length(substring_index(Full_name, " ", -1)) = 5
+
+exercicio 18 - show students whti an email account from sapo
+R: select * 
+from student
+where stu_email like "%@sapo.pt%"
+
+exercicio 19 - Show students with the address attribute 
+not filled.
+R: select * 
+from student
+where stu_email is null

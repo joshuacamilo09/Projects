@@ -1,0 +1,155 @@
+LAB 3 - Joshua Camilo
+
+
+
+exercicio 1 - How many students exist ?
+R: select count(*) as nstudents from student
+
+
+
+exercicio 2 - How many students exist, using the email ? (and why do we have this difference)
+R: select count(stu_email) from student
+- we have this difference because this time the workbench make the count by the number of the students that have an email.
+
+
+
+exercicio 3 - How many different places exist ?
+R: select count(distinct stu_place) as distinct_places
+from student
+
+
+
+exercicio 4 - How many courses, with students, exist ? 
+R: select count(distinct stu_cour_id) 
+as Courses_with_tudents
+from student
+
+
+
+exercicio 5 - What is the higher student ID (stu_id) ?
+R: select max(stu_id) 
+as Highest_Student_Id
+from student
+
+
+
+exercicio 6 - What is the age of the youngest student ?
+R: select min(timestampdiff(year, stu_bdate, curdate())) as age from student
+
+
+
+
+exercicio 7 - What is the average age of the students ?
+R:select round(AVG(TIMESTAMPDIFF(YEAR, stu_bdate, CURDATE()))) AS avg_age
+from student;
+
+
+
+exercicio 8 - How many students have no email ?
+R: select count(Full_name)
+as Students_without_email
+from student
+where stu_email is null
+
+
+
+exercicio 9 - How many male students are from Lisboa 
+(don’t forget we have also lisboa)
+R: select count(stu_gender) 
+as Students_from_Lx
+from student
+where stu_place like ("Lisboa") and stu_gender = "M"
+
+
+exercicio 10 - How many students do we have by gender ?
+R: select stu_gender, count(stu_gender) 
+from student
+group by stu_gender
+
+
+
+exercicio 11 - How many students do we have, by location ?
+R: select stu_place, count(stu_place) 
+from student
+group by stu_place
+
+
+exercicio 12 - How many students do we have,   
+by course ?
+R: select stu_cour_id, count(stu_cour_id) 
+from student
+group by stu_cour_id
+
+
+
+exercicio 13 - How many students do we have by year of birth ?
+R: select year(stu_bdate) as date_part, count(stu_bdate) as count
+from student
+group by year(stu_bdate)
+
+
+
+exercicio 14 - The highest number of students we have 
+in one single course ?  (only the number)
+R: select *
+from (select stu_cour_id, count(*) nstu 
+from student
+group by stu_cour_id) temp_table
+(solution on the pdf)
+OR 
+(my way)
+select stu_cour_id, count(stu_cour_id)
+from student
+group by stu_cour_id
+
+it gives the same result as the pdf table´s result
+
+
+
+exercicio 15 - How many male and female students exist in each course ?
+R: select stu_cour_id, stu_gender, count(*) as stu_n
+from student
+group by stu_gender, stu_cour_id
+order by stu_gender, stu_cour_id
+
+
+
+exercicio 16 - How many students do we have by 
+gender, in each location (place) 
+R: select stu_place, stu_gender, count(*) 
+as nstu
+from student
+where stu_place is not null // (just to remove the null space in place)
+group by stu_place, stu_gender
+order by stu_place, stu_gender
+
+
+
+
+exercicio 17 - Which courses have more than two  
+students ?
+R: select stu_cour_id, count(*) 
+as Courses_with_students
+from student
+group by stu_cour_id
+having count(*) > 2
+
+
+
+exercicio 18 - Which places have two students of the 
+same gender ?
+R: select stu_place, stu_gender, count(stu_gender) 
+as nstu
+from student
+group by stu_gender, stu_place
+having count(*) = 2
+
+
+exercicio 19 - Which courses have more than one 
+female student ?
+R: select stu_cour_id, count(stu_gender) 
+as stu_n
+from student
+where stu_gender like ("F")
+group by stu_cour_id, stu_gender
+having count(*) > 1

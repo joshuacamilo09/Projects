@@ -1,0 +1,85 @@
+LAB 2 - Joshua Camilo
+
+
+exercicio 1 - use the select command to view the current date
+R: select 
+now(),
+current_time(),
+date_format(now(), "%W, %d %M %Y") as Today
+
+
+exercicio 2 - display the current date suing the format DD-MM-YYYY
+R: select 
+date_format(now(), "%d-%m-%Y") as Today
+
+exercicio 3 - How current time in the format HH24:MI:SS
+R: select 
+current_time()
+
+exercicio 4 - Show students with their birthday in the format January, 12 of 1998
+R: select Full_Name,
+date_format(stu_bdate,"%W, %d %M %Y") as to_char
+from student;
+
+exercicio 5 - display students that were born in 1994
+R: select Full_Name, stu_bdate from student
+where stu_bdate like ("1994%")
+
+exercicio 6 - display students born after 1-1-1997
+R: select Full_Name, stu_bdate from student
+where stu_bdate > "1997-01-01"
+
+exercicio 7 - display students name in capital letters
+R: select Full_Name, stu_place, stu_email from student
+where Full_Name = upper(Full_Name);
+
+exercicio 8 - display students name in lowercase
+R: select Full_Name, stu_place, stu_email from student
+where Full_Name = lower(Full_Name);
+
+exercicio 9 - display students whose first name is joao
+R: select Full_Name, stu_gender, stu_bdate, stu_place from student
+where Full_Name like ("João%")
+
+exercicio 10 - Display the students email, and if student doesn't have email, show "no email available"
+R: select Full_Name, ifnull(stu_email,"no email available") as email  
+from student  
+
+exercicio 11 - display student name and their course knowing that: 1-GAD, 2 - GD, 3 - CT, 4 - PH
+R: select Full_name,
+case
+when stu_cour_id = 1 then "GAD"
+when stu_cour_id = 2 then "GD"
+when stu_cour_id = 3 then "CT"
+when stu_cour_id = 4 then "PH"
+end curso
+from student
+
+exercicio 12 - Replace ‘ã’ or ‘Ã’ characters to ‘A’  in 
+student’s name
+R: select Full_name,
+case
+when Full_name = Full_name then  replace(Full_name, 'ã', 'A')
+when Full_name = Full_name then  replace(Full_name, 'Ã', 'A')
+end nome
+from student
+
+exercicio 13 - display the first 3 letter of the students
+R: select 
+substr(Full_Name, 1,3) as Name, Full_name 
+from student
+
+exercicio 14 - calculate students age.
+R: select 
+Full_Name,
+stu_bdate,
+timestampdiff(year, stu_bdate, curdate()) as age
+from student;
+
+exercicio 15 - Display the students that are more than 27 years old
+R: select 
+Full_Name,
+stu_bdate,
+timestampdiff(year, stu_bdate, curdate()) as age
+from student
+where timestampdiff(year, stu_bdate, curdate()) > 27
